@@ -1,4 +1,7 @@
-﻿###单元测试
+原为思特沃克2018年秋招笔试题
+使用springboot+mybatis
+
+###单元测试
 单元测试程度部分的路径为src/test/java/com/example/order包中
 在Springboot中配合使用JUnit进行测试测试
 具体在OrderServiceTests类和OrderControllerTests类中，对其相对应方法进行单元测试
