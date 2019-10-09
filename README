@@ -1,0 +1,10 @@
+﻿###单元测试
+单元测试程度部分的路径为src/test/java/com/example/order包中
+在Springboot中配合使用JUnit进行测试测试
+具体在OrderServiceTests类和OrderControllerTests类中，对其相对应方法进行单元测试
+注：在进行单元测试前，需注释主类BadmintoncourtApplication中run()方法中main.start()一句（具体原因会在开发文档中进行说明）
+###主程序
+程序入口为Springboot中的BadmintoncourtApplication类main方法
+待程序启动后，可直接输入测试用例中的字符串进行判断
+输入回车换行，则输出收入汇总，并将收入汇总打印在target/classes/file包的文件中
+###注：在项目运行前，需在数据库中进行建表，具体请看项目文档

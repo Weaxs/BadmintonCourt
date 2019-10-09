@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.order.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.example.order.domain.Order">
+        <result column="userId" property="userId"/>
+        <result column="orderDate" property="orderDate"/>
+        <result column="startTime" property="startTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="court" property="court"/>
+        <result column="mark" property="mark"/>
+        <result column="fee" property="fee"/>
+    </resultMap>
+
+    <sql id="order_fields">
+        userId,orderDate,startTime,endTime,court,mark,fee
+    </sql>
+
+    <insert id="insertOrder" parameterType="Order">
+        INSERT INTO
+        orders
+        VALUES
+        (orders_sequence.nextval,#{userId},to_date(#{orderDate} || ' ' || #{startTime} ,'yyyy-mm-dd HH24:mI')
+        ,#{startTime},#{endTime},#{court},#{mark},#{fee})
+    </insert>
+
+    <update id="cancelOrder" parameterType="Order">
+        UPDATE
+        orders
+        SET mark=#{mark},fee=#{fee}
+        WHERE 1=1
+        and userId=#{userId}
+        and orderDate=to_date(#{orderDate} || ' ' || #{startTime} ,'yyyy-mm-dd HH24:mI')
+        and startTime=#{startTime}
+        and endTime=#{endTime}
+        and court=#{court}
+    </update>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="order_fields"/>
+        from orders
+        ORDER BY orderDate ASC
+    </select>
+
+    <select id="getByOrder" resultMap="BaseResultMap">
+        select
+        <include refid="order_fields"/>
+        from orders
+        WHERE 1=1
+        AND userId=#{userId}
+        and orderDate=to_date(#{orderDate} || ' ' || #{startTime} ,'yyyy-mm-dd HH24:mI')
+        and startTime=#{startTime}
+        and endTime=#{endTime}
+        and court=#{court}
+        ORDER BY orderDate ASC
+    </select>
+
+    <select id="getByOrderDate" resultMap="BaseResultMap">
+        SELECT
+        <include refid="order_fields"/>
+        FROM orders
+        WHERE 1=1
+        AND  orderDate > to_date(#{param1},'yyyy-mm-dd')
+        AND  orderDate &lt;= to_date(#{param1},'yyyy-mm-dd') + 1
+        AND  court=#{param2}
+        ORDER BY orderDate ASC
+    </select>
+
+    <select id="getByCourt" resultMap="BaseResultMap">
+        SELECT
+        <include refid="order_fields"/>
+        FROM orders
+        WHERE 1=1
+        AND  court=#{param1}
+        ORDER BY orderDate ASC
+    </select>
+
+</mapper>
